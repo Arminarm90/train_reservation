@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
-from api.serializers import LoginSerializer,UserRegistrationSerializer
+from .api.serializers import LoginSerializer,UserRegistrationSerializer
 from rest_framework.response import Response
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
