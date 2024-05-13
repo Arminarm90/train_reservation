@@ -10,7 +10,7 @@ class LoginSerializer(serializers.Serializer):
 
 # Register serializer
 class UserRegistrationSerializer(serializers.ModelSerializer):
-    phone_number = serializers.CharField()
+    email = serializers.CharField()
     password = serializers.CharField()
 
     class Meta:
