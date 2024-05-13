@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework import status
+from .models import User
 
 
 #  Login api
@@ -32,3 +33,21 @@ class LoginAPIView(APIView):
         else:
             # Invalid data
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+               
+# Register api
+class UserRegistrationAPIView(APIView):
+    def post(self, request):
+        serializer = UserRegistrationSerializer(data=request.data)
+        if serializer.is_valid():
+            # Check if user exits
+            phone_number = serializer.validated_data["phone_number"]
+            if User.objects.filter(phone_number=phone_number).exists():
+                return Response(
+                    {
+                        "error": "User with the provided username or email already exists"
+                    },
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
