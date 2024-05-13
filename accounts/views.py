@@ -6,6 +6,10 @@ from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework import status
 from .models import User
+from rest_framework_simplejwt.views import TokenRefreshView
+from rest_framework.permissions import AllowAny
+
+
 
 
 #  Login api
@@ -51,3 +55,7 @@ class UserRegistrationAPIView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# Get access token api
+class TokenRefreshView(TokenRefreshView):
+    permission_classes = [AllowAny]
