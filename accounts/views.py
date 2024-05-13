@@ -8,7 +8,8 @@ from rest_framework import status
 from .models import User
 from rest_framework_simplejwt.views import TokenRefreshView
 from rest_framework.permissions import AllowAny
-
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 
 
@@ -59,3 +60,17 @@ class UserRegistrationAPIView(APIView):
 # Get access token api
 class TokenRefreshView(TokenRefreshView):
     permission_classes = [AllowAny]
+    
+# User Profile Details
+class UserDetailsAPIView(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        data = {
+            "email": user.email,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+        }
+        return Response(data)
