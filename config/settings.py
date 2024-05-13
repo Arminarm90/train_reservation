@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     # my apps
     'rest_framework', 
     'rest_framework.authtoken',
+    'django_rest_passwordreset',
     'accounts',
 ]
 AUTH_USER_MODEL = 'accounts.User'
