@@ -45,8 +45,8 @@ class UserRegistrationAPIView(APIView):
         serializer = UserRegistrationSerializer(data=request.data)
         if serializer.is_valid():
             # Check if user exits
-            phone_number = serializer.validated_data["phone_number"]
-            if User.objects.filter(phone_number=phone_number).exists():
+            email = serializer.validated_data["email"]
+            if User.objects.filter(email=email).exists():
                 return Response(
                     {
                         "error": "User with the provided username or email already exists"
