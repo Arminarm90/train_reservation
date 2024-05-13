@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     # my apps
     'rest_framework', 
     'rest_framework.authtoken',
+    'django_rest_passwordreset',
     'accounts',
 ]
 AUTH_USER_MODEL = 'accounts.User'
@@ -131,6 +132,14 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Email Backend Configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.example.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'armin.arm90@gmail.com'
+EMAIL_HOST_PASSWORD = 'yose hdug mrcw mrnj'
 
 # Api permissions
 REST_FRAMEWORK = {
