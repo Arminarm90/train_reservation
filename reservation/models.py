@@ -10,13 +10,12 @@ class Reservation(models.Model):
     status_choices = [('reserved', 'Reserved'), ('paid', 'Paid')]
     status = models.CharField(max_length=10, choices=status_choices, default='reserved')
 
-    def calculate_total_price(self):
-        return sum(ticket.price for ticket in self.tickets.all()) * self.number_of_tickets
-
+    
     def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)  # Save the reservation first
-        self.total_price = self.calculate_total_price()  # Calculate total price after saving
-        super().save(*args, **kwargs)  # Save again to update the total price
+        # Calculate total price
+        self.total_price = self.number_of_tickets * self.tickets.price
+        super().save(*args, **kwargs)
+
 
     def __str__(self):
         return f"{self.user.email} - {self.status} - Total Price: {self.total_price}"
