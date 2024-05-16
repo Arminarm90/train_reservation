@@ -7,6 +7,7 @@ class Reservation(models.Model):
     tickets = models.ForeignKey(Ticket, on_delete=models.CASCADE)
     number_of_tickets = models.IntegerField(default=1)  # Number of tickets in the reservation
     total_price = models.DecimalField(max_digits=15, decimal_places=2, default=0)  # Total price of the reservation
+    seat_number = models.CharField(max_length=10, blank=True, null=True) 
     status_choices = [('reserved', 'Reserved'), ('paid', 'Paid')]
     status = models.CharField(max_length=10, choices=status_choices, default='reserved')
 
@@ -18,4 +19,4 @@ class Reservation(models.Model):
 
 
     def __str__(self):
-        return f"{self.user.email} - {self.status} - Total Price: {self.total_price}"
+        return f"{self.user.email} - {self.seat_number} - {self.status} - Total Price: {self.total_price}"

@@ -46,10 +46,8 @@ class Schedule(models.Model):
 
 class Ticket(models.Model):
     schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE)
-    seat_number = models.CharField(max_length=10)
     price = models.DecimalField(max_digits=10, decimal_places=2,default=1000.00)
-    is_reserved = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.schedule} - Seat: {self.seat_number}"
+            return f"{self.schedule} - {self.price}"
 
