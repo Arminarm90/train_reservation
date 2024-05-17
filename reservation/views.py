@@ -7,7 +7,7 @@ from .serializers import ReservationSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.conf import settings
-import json
+import simplejson as json
 import requests
 
 # zarinpal
@@ -64,24 +64,29 @@ class ReservationCreateAPIView(APIView):
             "seat_number": seat_number,
             "number_of_tickets": data.get("number_of_tickets", 1),
         }
-        data_zarin = {
-            "MerchantID": settings.MERCHANT,
-            "Amount": amount,
-            "Description": description,
-            "Phone": phone,
-            "CallbackURL": CallbackURL,
-        }
-        data_zarin = json.dumps(data_zarin)
-        headers = {"content-type": "application/json", "content-length": str(len(data))}
+        # data for zarinpal
+
         serializer = ReservationSerializer(data=reservation_data)
         if serializer.is_valid():
+            reservation = serializer.save()
+            data_zarin = {
+                "MerchantID": settings.MERCHANT,
+                "Amount": reservation.total_price,
+                "Description": description,
+                "Email": request.user.email,
+                "CallbackURL": CallbackURL,
+            }
+            data_zarin = json.dumps(data_zarin)
+            headers = {
+                "content-type": "application/json",
+                "content-length": str(len(data)),
+            }
             # zarinpal
             try:
                 response = requests.post(
                     ZP_API_REQUEST, data=data_zarin, headers=headers, timeout=10
                 )
                 if response.status_code == 200:
-                    reservation = serializer.save()
                     response_data = response.json()
                     if response_data["Status"] == 100:
                         return Response(
