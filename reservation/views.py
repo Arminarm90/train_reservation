@@ -2,6 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Reservation
+from .utils import send_reservation_email
 from train.models import Ticket
 from .serializers import ReservationSerializer
 from rest_framework.permissions import IsAuthenticated
@@ -89,6 +90,7 @@ class ReservationCreateAPIView(APIView):
                 if response.status_code == 200:
                     response_data = response.json()
                     if response_data["Status"] == 100:
+                        send_reservation_email(request.user.email, reservation)
                         return Response(
                             {
                                 **serializer.data,
