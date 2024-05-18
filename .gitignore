@@ -4,12 +4,17 @@
 *.pyc
 __pycache__
 db.sqlite3
+backup.sql
 media
 migrations
 
 # Backup files # 
 *.bak 
 
+# Docker
+.env.dev
+docker-compose.yml
+Dockerfile
 # If you are using PyCharm # 
 # User-specific stuff
 .idea/**/workspace.xml
