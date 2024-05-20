@@ -12,9 +12,9 @@ migrations
 *.bak 
 
 # Docker
-.env.dev
-docker-compose.yml
-Dockerfile
+# .env.dev
+# docker-compose.yml
+# Dockerfile
 # If you are using PyCharm # 
 # User-specific stuff
 .idea/**/workspace.xml
